@@ -9,4 +9,6 @@ routes.get('/user', new UserController().get)
 
 routes.get('/user/:id', new UserController().show)
 
+routes.put('user/:id', new UserController().update)
+
 export default routes
