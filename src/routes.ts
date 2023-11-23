@@ -16,5 +16,6 @@ routes.get('/post/:id', new PostController().show)
 routes.patch('/post/:id', new PostController().update)
 routes.delete('/post/:id', new PostController().delete)
 routes.patch('/post/:id/like', new PostController().likePost)
+routes.patch('/post/:id/comment', new PostController().commentPost)
 
 export default routes

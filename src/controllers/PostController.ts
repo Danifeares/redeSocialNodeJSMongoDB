@@ -1,6 +1,7 @@
 import { Request, Response } from 'express'
 import User from '../models/User'
 import Post from '../models/Post'
+import { Types } from 'mongoose'
 
 export class PostController {
   async create(req: Request, res: Response) {
@@ -95,6 +96,31 @@ export class PostController {
       }
 
       await Post.updateOne({ _id: id }, { $inc: { likes: 1 } })
+
+      return res.status(204).json()
+    } catch (error) {
+      return res.status(500).json({ message: 'Erro interno do servidor' })
+    }
+  }
+
+  async commentPost(req: Request, res: Response) {
+    const { id } = req.params
+    const { description } = req.body
+    try {
+      const post = await Post.findById(id)
+
+      if (!post) {
+        return res.status(404).json({ message: 'Postagem não encontrada.' })
+      }
+
+      await Post.updateOne({ _id: id }, {
+        $push: {
+          comments: {
+            _id: new Types.ObjectId(),
+            description
+          }
+        }
+      })
 
       return res.status(204).json()
     } catch (error) {
