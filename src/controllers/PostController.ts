@@ -52,15 +52,15 @@ export class PostController {
 
   async update(req: Request, res: Response) {
     const { id } = req.params
-    const {description} = req.body
+    const { description } = req.body
     try {
       const post = await Post.findById(id)
-      
+
       if (!post) {
         return res.status(404).json({ message: 'Postagem não encontrada.' })
       }
 
-      await Post.updateOne({_id: id}, {description})
+      await Post.updateOne({ _id: id }, { description })
 
       return res.status(204).json()
     } catch (error) {
@@ -68,4 +68,20 @@ export class PostController {
     }
   }
 
+  async delete(req: Request, res: Response) {
+    const { id } = req.params
+    try {
+      const post = await Post.findById(id)
+
+      if (!post) {
+        return res.status(404).json({ message: 'Postagem não encontrada.' })
+      }
+
+      await Post.deleteOne({ _id: id })
+
+      return res.status(204).json()
+    } catch (error) {
+      return res.status(500).json({ message: 'Erro interno do servidor' })
+    }
+  }
 }
