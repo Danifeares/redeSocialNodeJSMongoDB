@@ -11,5 +11,6 @@ routes.put('/user/:id', new UserController().update)
 routes.patch('/user/:id/inactive', new UserController().inactive)
 
 routes.post('/post', new PostController().create)
+routes.get('/posts', new PostController().get)
 
 export default routes

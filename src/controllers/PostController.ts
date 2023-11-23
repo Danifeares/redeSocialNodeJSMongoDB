@@ -3,13 +3,13 @@ import User from '../models/User'
 import Post from '../models/Post'
 
 export class PostController {
-  async create(req: Request, res: Response){
-    const { user_id, description, images} = req.body
+  async create(req: Request, res: Response) {
+    const { user_id, description, images } = req.body
     try {
       const user = await User.findById(user_id)
 
       if (!user) {
-        return res.status(404).json({message: 'Usuário não encontrado.'})
+        return res.status(404).json({ message: 'Usuário não encontrado.' })
       }
 
       const newPost = await Post.create({
@@ -26,4 +26,14 @@ export class PostController {
       return res.status(500).json({ message: 'Erro interno do servidor' })
     }
   }
+
+  async get(req: Request, res: Response) {
+    try {
+      const posts = await Post.find()
+      return res.json(posts)
+    } catch (error) {
+      return res.status(500).json({ message: 'Erro interno do servidor' })
+    }
+  }
+
 }
