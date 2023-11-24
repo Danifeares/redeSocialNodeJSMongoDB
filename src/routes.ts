@@ -1,6 +1,7 @@
 import { Router } from 'express'
 import { UserController } from './controllers/UserController'
 import { PostController } from './controllers/PostController'
+import multer from './middlewares/multer'
 
 const routes = Router()
 
@@ -10,7 +11,7 @@ routes.get('/user/:id', new UserController().show)
 routes.put('/user/:id', new UserController().update)
 routes.patch('/user/:id/inactive', new UserController().inactive)
 
-routes.post('/post', new PostController().create)
+routes.post('/post', multer.array('images'), new PostController().create)
 routes.get('/post', new PostController().get)
 routes.get('/post/:id', new PostController().show)
 routes.patch('/post/:id', new PostController().update)
