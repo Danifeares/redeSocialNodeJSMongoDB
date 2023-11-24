@@ -1,4 +1,12 @@
 services:
+  app:
+    build: .
+    restart: always
+    container_name: app-social-network
+    env_file:
+      - .env
+    ports:
+      - ${PORT}:${PORT}
   mongo: 
     image: mongo
     restart: always
